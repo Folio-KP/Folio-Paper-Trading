@@ -1,0 +1,21 @@
+:root {
+  --color-background: #f9f9f9;
+  --color-primary: #61afef;
+  --color-primary-hover: #4a98d8;
+  --color-secondary: #6c757d;
+  --color-secondary-hover: #4a98d8;
+
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: #212121;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+}
