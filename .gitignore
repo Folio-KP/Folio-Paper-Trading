@@ -1,0 +1,17 @@
+# Text backup files
+*.bak
+
+# Database
+*.sqlite3
+
+# virtual environment
+*/env/
+
+# Python bytecode files
+*.pyc
+
+# Django migrations
+*/migrations/*
+
+# IDE
+.vscode/
