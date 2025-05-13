@@ -7,6 +7,9 @@
 # virtual environment
 */env/
 
+# env file
+*.env
+
 # Python bytecode files
 *.pyc
 
