@@ -42,4 +42,4 @@ def populate_stocks(json_path):
       count+=1
   print(count)
 
-populate_stocks('trading/nasdaq_full_tickers.json')
+#populate_stocks('trading/nasdaq_full_tickers.json')
