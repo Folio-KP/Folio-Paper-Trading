@@ -104,3 +104,15 @@ class CreateUserView(generics.CreateAPIView):
   def perform_create(self, serializer):
     user = serializer.save()
     Portfolio.objects.create(user=user, balance=10000.00, net_deposited=10000.00)
+
+class StockHistoryView(views.APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, symbol):
+        symbol = symbol.upper()
+        try:
+            history = get_stock_data.get_history(symbol)
+            return Response(history)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+        

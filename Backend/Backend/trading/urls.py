@@ -7,4 +7,5 @@ urlpatterns = [
   path('portfolio/',views.PortfolioView.as_view(),name='portfolio'),
   path('holdings/buy/',views.BuyHoldingView.as_view(),name='buy-holding'),
   path('holdings/sell/',views.SellHoldingView.as_view(),name='sell-holding'),
+  path('historical/<str:symbol>/', views.StockHistoryView.as_view(), name='stock-history'),
   ]
