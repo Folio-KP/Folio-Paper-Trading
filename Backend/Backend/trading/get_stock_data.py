@@ -1,11 +1,10 @@
 import yfinance as yf
-from datetime import datetime, timedelta, timezone  # <-- Fixes datetime.now and timedelta
-import pandas as pd                       # <-- Fixes pd.*
+from datetime import datetime, timedelta, timezone
+import pandas as pd
 import numpy as np
-# get all the stock info needed to update database
 
 def safe_round(val):
-    return round(val, 4) if isinstance(val, (int, float)) else None
+    return round(val, 2) if isinstance(val, (int, float)) else None
 
 def get_stock_info(symbol):
   ticker = yf.Ticker(symbol)
@@ -38,11 +37,6 @@ def get_fast_price(symbol):
   except Exception as e:
     price = None 
   return price
-
-# get timeseries data and format as dictionary
-# periods: 1d, 1wk, 1mo, 1y
-def get_history(symbol, period):
-  import yfinance as yf
 
 # Get historical data across standard intervals
 def get_history(symbol):
@@ -93,5 +87,38 @@ def get_history(symbol):
                 }
         except Exception as e:
             results[key] = {"error": str(e)}
+
+    return results
+
+# periods: 1d, 1wk, 1mo, 3mo, 1y, 5y
+def get_history_alt(symbol, period):
+    ticker = yf.Ticker(symbol)
+
+    # key = period, value = interval
+    periods = {
+       "1d": "15m",
+       "1wk": "1h",
+       "1mo": "1d",
+       "3mo": "1wk",
+       "1y": "1wk",
+       "5y": "1mo"
+       }
+
+    results = {}
+
+    if period not in periods.keys():
+       raise ValueError('Not a valid period')
+
+    try:
+        hist = ticker.history(period=period, interval=periods[period])
+        if hist.empty:
+            raise ValueError("No historical data available.")
+
+        # tz_localize removes timezone part of the datetime - assume ET
+        results['date'] = list(hist.index.tz_localize(None).strftime("%Y-%m-%d %H:%M:%S").astype(str))
+        results['price'] = list(round(hist['Close'],2))
+    except Exception as e:
+        results['date'] = []
+        results['price'] = []
 
     return results
