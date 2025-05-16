@@ -38,8 +38,9 @@ def get_fast_price(symbol):
     price = None 
   return price
 
+
 # Get historical data across standard intervals
-def get_history(symbol):
+def get_history_old(symbol):
     ticker = yf.Ticker(symbol)
     now = datetime.now(timezone.utc)
 
@@ -91,7 +92,7 @@ def get_history(symbol):
     return results
 
 # periods: 1d, 1wk, 1mo, 3mo, 1y, 5y
-def get_history_alt(symbol, period):
+def get_history(symbol, period):
     ticker = yf.Ticker(symbol)
 
     # key = period, value = interval

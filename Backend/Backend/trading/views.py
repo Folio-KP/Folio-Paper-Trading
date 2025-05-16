@@ -110,8 +110,10 @@ class StockHistoryView(views.APIView):
 
     def get(self, request, symbol):
         symbol = symbol.upper()
-        try:
-            history = get_stock_data.get_history(symbol)
+        # default to 1d if blank
+        period = request.GET.get('period','1d')
+        try:            
+            history = get_stock_data.get_history(symbol, period)
             return Response(history)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
